@@ -9,10 +9,15 @@ class Board {
  public:
   Board();
 
+  /**
+   * This is just for tests!!!!! Tells you what char is currently
+   * at a given location on a board.
+   */
+  char testBoard(uint32_t, uint32_t);
 
   /**
    * This goes over all the queens in play and populates the
-   * board with them/
+   * board with them. Using '@' to mark their loactions.
    */
   void update(std::vector<Queen>);
 
@@ -24,7 +29,12 @@ class Board {
 
  private:
   /**
-   * This leaves an '#' logo where a queen currently is.
+   * This cleans the board of any markings left over.
+   */
+  void cleanBoard(void);
+
+  /**
+   * This leaves an '@' char where a queen currently is.
    */
   void markBoard(Queen);
   static const int32_t boardSize = 8;
