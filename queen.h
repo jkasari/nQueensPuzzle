@@ -11,6 +11,11 @@ class Queen {
   Queen(uint32_t, uint32_t);
 
   /**
+   * Takes a new location and moves the queen there.
+   */
+  void moveTo(uint32_t, uint32_t);
+
+  /**
    * Returns the |row| of a |queen|.
    */
   uint32_t row();
