@@ -1,12 +1,29 @@
+#include <vector>
 #ifndef queen_h
 #define queen_h
 
-class queen {
+using Position = std::array<uint32_t, 2>;
+
+
+class Queen {
 
  public:
+  Queen(uint32_t, uint32_t);
+
+  /**
+   * Returns the |row| of a |queen|.
+   */
+  uint32_t row();
+
+  /**
+   * Returns the |col| of a |queen|.
+   */
+  uint32_t col();
 
  private:
 
+  uint32_t currentRow;
+  uint32_t currentCol;
 };
 
 #endif // queen_h
