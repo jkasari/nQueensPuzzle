@@ -53,13 +53,12 @@ int main() {
       assert_eq('@', location2);
       queens[0].moveTo(1, 0);
       queens[1].moveTo(1, 3);
+      
       chessBoard.update(queens);
       location1 = chessBoard.testBoard(0, 0);
       location2 = chessBoard.testBoard(5, 2);
       assert_eq(' ', location1);
       assert_eq(' ', location2);
-
-
     }
   }
 

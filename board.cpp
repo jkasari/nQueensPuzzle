@@ -18,7 +18,7 @@ std::ostream& operator<<(std::ostream& stream, const Board& chessBoard) {
   return stream;
 }
 
-char Board::testBoard(uint32_t row, uint32_t col) {
+char Board::testBoard(int32_t row, uint32_t col) {
   return chessBoard[row][col];
 }
 
@@ -56,4 +56,85 @@ void Board::cleanBoard() {
 
 void Board::markBoard(Queen elizabeth) {
   chessBoard[elizabeth.row()][elizabeth.col()] = '@';
+}
+
+bool Board::isOnBoard(int32_t row, uint32_t col) {
+    if(row < boardSize || 0 <= row || col < boardSize || 0 <= col) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+std::vector<Square> Board::potentialMoves(Queen elizabeth) {
+    int32_t row = elizabeth.row();
+    int32_t col = elizabeth.col();
+    std::vector<Square> newMoves;
+
+    // Move up.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       newMoves.push_back(Square(row, col));
+       col--;
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move down.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       col++;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move left.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row--;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move right.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row++;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move diagonally up and left.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row--;
+       col--;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move diagonally up and right.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row++;
+       col--;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move diagonally down and left.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row--;
+       col++;
+       newMoves.push_back(Square(row, col));
+    }
+    row = elizabeth.row();
+    col = elizabeth.col();
+
+    // Move diagonally down and right.
+    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+       row++;
+       col++;
+       newMoves.push_back(Square(row, col));
+    }
+    return newMoves;
 }
