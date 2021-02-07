@@ -48,6 +48,11 @@ class Board {
    */
   std::vector<Square> potentialMoves(Queen);
 
+  /**
+   * This tells you what queen you want to move.
+   */
+  int32_t queenToMove(std::vector<Queen>);
+
 
 
  private:
