@@ -73,8 +73,8 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
 
     // Move up.
     while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       newMoves.push_back(Square(row, col));
        col--;
+       newMoves.push_back(Square(row, col));
     }
     row = elizabeth.row();
     col = elizabeth.col();
@@ -137,4 +137,102 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
        newMoves.push_back(Square(row, col));
     }
     return newMoves;
+}
+
+
+int32_t Board::underAttackBy(Square location) {
+    int32_t row = location.first;
+    int32_t col = location.second;
+    int32_t numberOfAttackers = 0;
+
+    // Move up.
+    while(isOnBoard(row, col)) {
+       col--;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move down.
+    while(isOnBoard(row, col)) {
+       col++;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move left.
+    while(isOnBoard(row, col)) {
+       row--;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move right.
+    while(isOnBoard(row, col)) {
+       row++;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move diagonally up and left.
+    while(isOnBoard(row, col)) {
+       row--;
+       col--;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move diagonally up and right.
+    while(isOnBoard(row, col)) {
+       row++;
+       col--;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move diagonally down and left.
+    while(isOnBoard(row, col)) {
+       row--;
+       col++;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    row = location.first;
+    col = location.second;
+
+    // Move diagonally down and right.
+    while(isOnBoard(row, col)) {
+       row++;
+       col++;
+       if(chessBoard[row][col] == '@') {
+         numberOfAttackers++;
+         break;
+       }
+    }
+    return numberOfAttackers;
 }

@@ -31,12 +31,6 @@ class Board {
    */
   Queen findBestMove(Queen);
 
-  /**
-   * Takes a queen and tells you all the okay places
-   * to move it on a live board accounting for other
-   * queens.
-   */
-  std::vector<Square> potentialMoves(Queen);
 
 
  private:
@@ -54,13 +48,20 @@ class Board {
    * This gives you the number of other queens that can
    * attack any given location.
    */
-  int32_t underAttackBy(uint32_t, uint32_t);
+  int32_t underAttackBy(Square);
 
   /**
    * Returns true if a position is on a the board and
    * false if it is off the board.
    */
   bool isOnBoard(int32_t, uint32_t);
+
+  /**
+   * Takes a queen and tells you all the okay places
+   * to move it on a live board accounting for other
+   * queens.
+   */
+  std::vector<Square> potentialMoves(Queen);
 
   static const int32_t boardSize = 8;
   char chessBoard[boardSize][boardSize];
