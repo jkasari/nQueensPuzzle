@@ -76,7 +76,7 @@ void Board::markBoard(Queen elizabeth) {
 }
 
 bool Board::isOnBoard(int32_t row, uint32_t col) {
-    if(row < boardSize && 0 < row && col < boardSize && 0 < col) {
+    if(row < boardSize && 0 <= row && col < boardSize && 0 <= col) {
         return true;
     } else {
         return false;
@@ -89,69 +89,85 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     std::vector<Square> newMoves;
 
     // Move up.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       col--;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row++;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move down.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       col++;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row--;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move left.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row--;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        col--;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move right.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row++;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        col++;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally up and left.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row--;
-       col--;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row--;
+        col--;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally up and right.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row++;
-       col--;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row--;
+        col++;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally down and left.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row--;
-       col++;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row++;
+        col--;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally down and right.
-    while(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
-       row++;
-       col++;
-       newMoves.push_back(Square(row, col));
+    for(int i = 0; i < boardSize; ++i) {
+        row++;
+        col++;
+        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+          newMoves.push_back(Square(row, col));
+        }
     }
     return newMoves;
 }
@@ -164,7 +180,7 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move up.
     while(isOnBoard(row, col)) {
-       col--;
+       row--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
        }
@@ -174,7 +190,7 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move down.
     while(isOnBoard(row, col)) {
-       col++;
+       row++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
        }
@@ -184,7 +200,7 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move left.
     while(isOnBoard(row, col)) {
-       row--;
+       col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
        }
@@ -194,7 +210,7 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move right.
     while(isOnBoard(row, col)) {
-       row++;
+       col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
        }
