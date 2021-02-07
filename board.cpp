@@ -30,6 +30,19 @@ Board::Board() {
   }
 }
 
+
+int32_t Board::findSmallestIndex(std::vector<int32_t> vec) {
+    int32_t tempVal = 1000000;
+    int32_t index = 0;
+    for(int i = 0; i < vec.size(); ++i) {
+        if(vec[i] < i) {
+            tempVal = vec[i];
+            index = i;
+        }
+    }
+    return index;
+}
+
 void Board::update(std::vector<Queen> queens) {
   cleanBoard();
   for (int q = 0; q < queens.size(); ++q) {
@@ -235,4 +248,15 @@ int32_t Board::underAttackBy(Square location) {
        }
     }
     return numberOfAttackers;
+}
+
+
+Square Board::findBestMove(Queen elizabeth) {
+    std::vector<Square> moves(potentialMoves(elizabeth));
+    std::vector<int32_t> moveValues;
+
+    for(int i = 0; i < moves.size(); ++i) {
+        moveValues.push_back(underAttackBy(moves[i]));
+    }
+    return moves[findSmallestIndex(moveValues)];
 }

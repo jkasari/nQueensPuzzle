@@ -29,11 +29,16 @@ class Board {
   /**
    * Finds the best possible move for any given queen
    */
-  Queen findBestMove(Queen);
+  Square findBestMove(Queen);
 
 
 
  private:
+  /**
+   * Finds the index of the smallest value in an vector.
+   */
+  int32_t findSmallestIndex(std::vector<int32_t>);
+
   /**
    * This cleans the board of any markings left over.
    */
