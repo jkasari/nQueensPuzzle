@@ -35,7 +35,7 @@ int32_t Board::findSmallestIndex(std::vector<int32_t> vec) {
     int32_t tempVal = vec[0];
     int32_t index = 0;
     for(int i = 0; i < vec.size(); ++i) {
-        if(i > vec[i]) {
+        if(i < vec[i]) {
             tempVal = vec[i];
             index = i;
         }
@@ -183,6 +183,7 @@ int32_t Board::underAttackBy(Square location) {
        row--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -193,6 +194,7 @@ int32_t Board::underAttackBy(Square location) {
        row++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -203,6 +205,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -213,6 +216,7 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -224,6 +228,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -235,6 +240,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -246,6 +252,7 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
     }
     row = location.first;
@@ -257,7 +264,11 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
+         row = -1;
        }
+    }
+    if(numberOfAttackers == 1) {
+      numberOfAttackers = 2;
     }
     return numberOfAttackers;
 }
@@ -282,4 +293,13 @@ Square Board::findBestMove(Queen elizabeth) {
         moveValues.push_back(underAttackBy(moves[i]));
     }
     return moves[findSmallestIndex(moveValues)];
+}
+
+
+int32_t Board::queenToMove(std::vector<Queen> queens) {
+  std::vector<int32_t> moveValues;
+  for(int i = 0; i < queens.size(); ++i) {
+    moveValues.push_back(underAttackBy(findBestMove(queens[i])));
+  }
+  return moveValues[findSmallestIndex(moveValues)];
 }
