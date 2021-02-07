@@ -4,8 +4,9 @@
 using namespace std;
 
 int main () {
-
 Board chessBoard;
+Queen elizabeth(4, 2);
+
 
 cout << chessBoard << endl;
 // Create 8 queens.
