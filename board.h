@@ -21,6 +21,11 @@ class Board {
   char testBoard(int32_t, uint32_t);
 
   /**
+   * This is just for terminal visual tests!!
+   */
+  void markBoard(Square);
+
+  /**
    * This goes over all the queens in play and populates the
    * board with them. Using '@' to mark their loactions.
    */
@@ -30,6 +35,18 @@ class Board {
    * Finds the best possible move for any given queen
    */
   Square findBestMove(Queen);
+
+  /**
+   * Looks to see if all the queens to not have any attackers.
+   */
+  bool keepTrying(std::vector<Queen>);
+
+  /**
+   * Takes a queen and tells you all the okay places
+   * to move it on a live board accounting for other
+   * queens.
+   */
+  std::vector<Square> potentialMoves(Queen);
 
 
 
@@ -60,13 +77,6 @@ class Board {
    * false if it is off the board.
    */
   bool isOnBoard(int32_t, uint32_t);
-
-  /**
-   * Takes a queen and tells you all the okay places
-   * to move it on a live board accounting for other
-   * queens.
-   */
-  std::vector<Square> potentialMoves(Queen);
 
   static const int32_t boardSize = 8;
   char chessBoard[boardSize][boardSize];

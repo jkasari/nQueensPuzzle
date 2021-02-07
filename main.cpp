@@ -1,20 +1,40 @@
 #include <iostream>
+#include <unistd.h>
 #include "board.h"
 #include "queen.h"
 using namespace std;
 
-int main () {
-Board chessBoard;
-Queen elizabeth(4, 2);
+int32_t boardSize = 8;
+int32_t row = 0;
+int32_t col = 0;
+
+int main() {
+  Board chessBoard;
+  //vector<Queen> queens;
+  //for (int i = 0; i < boardSize; ++i) {
+    Queen elizabeth(4, 3);
+  //      queens.push_back(elizabeth);
+  //}
+  //chessBoard.update(queens);
+  vector<Square> moves = chessBoard.potentialMoves(elizabeth);
+  for(int i = 0; i < moves.size(); ++i) {
+      chessBoard.markBoard(moves[i]);
+  }
+  chessBoard.markBoard(moves[0]);
+  cout << chessBoard << endl;
 
 
-cout << chessBoard << endl;
-// Create 8 queens.
-// cycle through those 8 queens.
-// Each queen is going to leave a mark on the board of it's current location.
-// Use the chessboard to judge where best to move queen.
-// The move will change the queens data memebers AND change the marking on the chess baord.
 
 
 
+//  while(chessBoard.keepTrying(queens)) {
+//    for (int i = 0; i < boardSize; i++) {
+//      chessBoard.update(queens);
+//      cout << chessBoard << endl;
+//      row = chessBoard.findBestMove(queens[i]).first;
+//      col = chessBoard.findBestMove(queens[i]).second;
+//      queens[i].moveTo(row, col);
+//      usleep(100000);
+//    }
+//  }
 }
