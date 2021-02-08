@@ -35,7 +35,7 @@ int32_t Board::findSmallestIndex(std::vector<int32_t> vec) {
     int32_t tempVal = vec[0];
     int32_t index = 0;
     for(int i = 0; i < vec.size(); ++i) {
-        if(i < vec[i]) {
+        if(tempVal > vec[i]) {
             tempVal = vec[i];
             index = i;
         }
@@ -91,7 +91,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     // Move up.
     for(int i = 0; i < boardSize; ++i) {
         row++;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -101,7 +101,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     // Move down.
     for(int i = 0; i < boardSize; ++i) {
         row--;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -111,7 +111,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     // Move left.
     for(int i = 0; i < boardSize; ++i) {
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -121,7 +121,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     // Move right.
     for(int i = 0; i < boardSize; ++i) {
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -132,7 +132,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     for(int i = 0; i < boardSize; ++i) {
         row--;
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -143,7 +143,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     for(int i = 0; i < boardSize; ++i) {
         row--;
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -154,7 +154,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     for(int i = 0; i < boardSize; ++i) {
         row++;
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -165,7 +165,7 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     for(int i = 0; i < boardSize; ++i) {
         row++;
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] == ' ') {
+        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
           newMoves.push_back(Square(row, col));
         }
     }
@@ -183,7 +183,7 @@ int32_t Board::underAttackBy(Square location) {
        row--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -194,7 +194,7 @@ int32_t Board::underAttackBy(Square location) {
        row++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -205,7 +205,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -216,7 +216,7 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -228,7 +228,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -240,7 +240,7 @@ int32_t Board::underAttackBy(Square location) {
        col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -252,7 +252,7 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
     }
     row = location.first;
@@ -264,24 +264,19 @@ int32_t Board::underAttackBy(Square location) {
        col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
-         row = -1;
+         break;
        }
-    }
-    if(numberOfAttackers == 1) {
-      numberOfAttackers = 2;
     }
     return numberOfAttackers;
 }
 
 bool Board::keepTrying(std::vector<Queen> queens) {
-    return true;
     for(int i = 0; i < queens.size(); ++i) {
         if(0 != underAttackBy(Square(queens[i].row(), queens[i].col()))) {
             return true;
-        } else {
-            return false;
         }
     }
+    return false;
 }
 
 
@@ -301,5 +296,5 @@ int32_t Board::queenToMove(std::vector<Queen> queens) {
   for(int i = 0; i < queens.size(); ++i) {
     moveValues.push_back(underAttackBy(findBestMove(queens[i])));
   }
-  return moveValues[findSmallestIndex(moveValues)];
+  return findSmallestIndex(moveValues);
 }
