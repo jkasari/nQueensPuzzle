@@ -17,14 +17,12 @@ int main() {
   for (int i = 0; i < boardSize; ++i) {
     Queen elizabeth(0, i);
     queens.push_back(elizabeth);
+    chessBoard.update(queens);
   }
 
+  int cycle = 0;
   while (chessBoard.keepTrying(queens)) {
-   // for(int i = 0; i < boardSize; ++i) {
-
-    chessBoard.update(queens);
-    cout << chessBoard << endl;
-
+    cycle++;
     choiceQueen = chessBoard.queenToMove(queens);
     if(oldQueen == choiceQueen) {
       queenCount++;
@@ -40,8 +38,24 @@ int main() {
     row = chessBoard.findBestMove(queens[choiceQueen]).first;
     col = chessBoard.findBestMove(queens[choiceQueen]).second;
     queens[choiceQueen].moveTo(row, col);
+    chessBoard.update(queens);
+    cout << chessBoard << endl;
+    for(int i = 0; i < 8; ++i) {
+      cout << chessBoard.underAttackBy(Square(queens[i].row(), queens[i].col())) << " - ";
+    }
+    cout << endl;
     usleep(1000000);
   //  }
   }
-  return 0;
+ // cout << chessBoard << endl;
+
+ // Queen mary(4,3);
+ // vector<Square> moves = chessBoard.potentialMoves(mary);
+ // for(int i = 0; i < moves.size(); ++i) {
+ //   chessBoard.markBoard(moves[i]);
+ // }
+ // cout << chessBoard << endl;
+
+
+ // return 0;
 }

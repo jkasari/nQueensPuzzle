@@ -53,6 +53,11 @@ class Board {
    */
   int32_t queenToMove(std::vector<Queen>);
 
+  /**
+   * This gives you the number of other queens that can
+   * attack any given location.
+   */
+  int32_t underAttackBy(Square);
 
 
  private:
@@ -71,11 +76,6 @@ class Board {
    */
   void markBoard(Queen);
 
-  /**
-   * This gives you the number of other queens that can
-   * attack any given location.
-   */
-  int32_t underAttackBy(Square);
 
   /**
    * Returns true if a position is on a the board and

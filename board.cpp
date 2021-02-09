@@ -89,85 +89,82 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     std::vector<Square> newMoves;
 
     // Move up.
-    for(int i = 0; i < boardSize; ++i) {
-        row++;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
+    row--;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
+        row--;
+
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move down.
-    for(int i = 0; i < boardSize; ++i) {
-        row--;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
+    row++;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
+        row++;
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move left.
-    for(int i = 0; i < boardSize; ++i) {
+    col--;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move right.
-    for(int i = 0; i < boardSize; ++i) {
+    col++;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally up and left.
-    for(int i = 0; i < boardSize; ++i) {
+    row--;
+    col--;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         row--;
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally up and right.
-    for(int i = 0; i < boardSize; ++i) {
+    row--;
+    col++;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         row--;
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally down and left.
-    for(int i = 0; i < boardSize; ++i) {
+    row++;
+    col--;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         row++;
         col--;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     row = elizabeth.row();
     col = elizabeth.col();
 
     // Move diagonally down and right.
-    for(int i = 0; i < boardSize; ++i) {
+    row++;
+    col++;
+    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
+        newMoves.push_back(Square(row, col));
         row++;
         col++;
-        if(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-          newMoves.push_back(Square(row, col));
-        }
     }
     return newMoves;
 }
@@ -236,8 +233,8 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move diagonally up and right.
     while(isOnBoard(row, col)) {
-       row++;
-       col--;
+       row--;
+       col++;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
          break;
@@ -248,8 +245,8 @@ int32_t Board::underAttackBy(Square location) {
 
     // Move diagonally down and left.
     while(isOnBoard(row, col)) {
-       row--;
-       col++;
+       row++;
+       col--;
        if(chessBoard[row][col] == '@') {
          numberOfAttackers++;
          break;
@@ -267,7 +264,7 @@ int32_t Board::underAttackBy(Square location) {
          break;
        }
     }
-    return numberOfAttackers;
+    return numberOfAttackers - 1;
 }
 
 bool Board::keepTrying(std::vector<Queen> queens) {
