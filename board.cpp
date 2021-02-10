@@ -83,92 +83,26 @@ bool Board::isOnBoard(int32_t row, uint32_t col) {
     }
 }
 
+
+
 std::vector<Square> Board::potentialMoves(Queen elizabeth) {
-    int32_t row = elizabeth.row();
-    int32_t col = elizabeth.col();
-    std::vector<Square> newMoves;
+  int32_t row = elizabeth.row();
+  int32_t col = elizabeth.col();
+  std::vector<Square> newMoves;
 
-    // Move up.
-    row--;
+  for(int i = 0; i < 8; ++i) {
+    row = queensMoves(i, row, col).first;
+    col = queensMoves(i, row, col).second;
     while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row--;
-
+      newMoves.push_back(Square(row, col));
+    row = queensMoves(i, row, col).first;
+    col = queensMoves(i, row, col).second;
     }
     row = elizabeth.row();
     col = elizabeth.col();
-
-    // Move down.
-    row++;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row++;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move left.
-    col--;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        col--;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move right.
-    col++;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        col++;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move diagonally up and left.
-    row--;
-    col--;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row--;
-        col--;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move diagonally up and right.
-    row--;
-    col++;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row--;
-        col++;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move diagonally down and left.
-    row++;
-    col--;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row++;
-        col--;
-    }
-    row = elizabeth.row();
-    col = elizabeth.col();
-
-    // Move diagonally down and right.
-    row++;
-    col++;
-    while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
-        newMoves.push_back(Square(row, col));
-        row++;
-        col++;
-    }
-    return newMoves;
+  }
+  return newMoves;
 }
-
 
 
 int32_t Board::underAttackBy(Square location) {
