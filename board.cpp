@@ -170,102 +170,56 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
 }
 
 
+
 int32_t Board::underAttackBy(Square location) {
-    int32_t row = location.first;
-    int32_t col = location.second;
-    int32_t numberOfAttackers = 0;
+  int32_t row = location.first;
+  int32_t col = location.second;
+  int32_t numberOfAttackers = 0;
 
-    // Move up.
+  for(int i = 0; i < 8; i++) {
     while(isOnBoard(row, col)) {
-       row--;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
+      row = queensMoves(i, row, col).first;
+      col = queensMoves(i, row, col).second;
+      if(chessBoard[row][col] == '@') {
+        numberOfAttackers += 1;
+        break;
+      }
     }
     row = location.first;
     col = location.second;
-
-    // Move down.
-    while(isOnBoard(row, col)) {
-       row++;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move left.
-    while(isOnBoard(row, col)) {
-       col--;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move right.
-    while(isOnBoard(row, col)) {
-       col++;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move diagonally up and left.
-    while(isOnBoard(row, col)) {
-       row--;
-       col--;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move diagonally up and right.
-    while(isOnBoard(row, col)) {
-       row--;
-       col++;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move diagonally down and left.
-    while(isOnBoard(row, col)) {
-       row++;
-       col--;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    row = location.first;
-    col = location.second;
-
-    // Move diagonally down and right.
-    while(isOnBoard(row, col)) {
-       row++;
-       col++;
-       if(chessBoard[row][col] == '@') {
-         numberOfAttackers++;
-         break;
-       }
-    }
-    return numberOfAttackers - 1;
+  }
+  return numberOfAttackers;
 }
+
+//takes a square and a number. The number is 1 - 8 on moves the queen can make.
+//returns an incremented Square of the original moves.
+//so (8, 0, 0) should return Square(1, 1) as 8 iincreases both rows and coloms.
+Square Board::queensMoves(int32_t moveNumber, int32_t row, int32_t col) {
+ switch(moveNumber) {
+ case 0:
+  return(Square(row - 1, col));
+ case 1:
+  return(Square(row + 1, col));
+ case 2:
+  return(Square(row, col - 1));
+ case 3:
+  return(Square(row, col + 1));
+ case 4:
+  return(Square(row - 1, col + 1));
+ case 5:
+  return(Square(row - 1 , col - 1));
+ case 6:
+  return(Square(row + 1 , col - 1));
+ case 7:
+  return(Square(row + 1, col + 1));
+ }
+ //If the number is not 1 - 8 this returns a 0, 0 location.
+ return(Square(0, 0));
+}
+
+
+
+
 
 bool Board::keepTrying(std::vector<Queen> queens) {
     for(int i = 0; i < queens.size(); ++i) {

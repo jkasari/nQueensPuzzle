@@ -83,6 +83,14 @@ class Board {
    */
   bool isOnBoard(int32_t, uint32_t);
 
+  /**
+   * Takes a row and coloum and "moves" depending on the move
+   * number you give it.
+   * 1 is |row--| and 8 is |row++, col++|.
+   */
+  Square queensMoves(int32_t, int32_t, int32_t);
+
+
   static const int32_t boardSize = 8;
   char chessBoard[boardSize][boardSize];
 
