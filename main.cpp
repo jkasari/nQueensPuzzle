@@ -40,10 +40,11 @@ int main() {
     queens[choiceQueen].moveTo(row, col);
     chessBoard.update(queens);
     cout << chessBoard << endl;
-    for(int i = 0; i < 8; ++i) {
+    cout << "  ";
+    for(int i = 0; i < 7; ++i) {
       cout << chessBoard.underAttackBy(Square(queens[i].row(), queens[i].col())) << " - ";
     }
-    cout << endl;
+    cout << chessBoard.underAttackBy(Square(queens[7].row(), queens[7].col())) << endl;
     usleep(1000000);
   //  }
   }

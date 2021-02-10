@@ -95,8 +95,8 @@ std::vector<Square> Board::potentialMoves(Queen elizabeth) {
     col = queensMoves(i, row, col).second;
     while(isOnBoard(row, col) && chessBoard[row][col] != '@') {
       newMoves.push_back(Square(row, col));
-    row = queensMoves(i, row, col).first;
-    col = queensMoves(i, row, col).second;
+      row = queensMoves(i, row, col).first;
+      col = queensMoves(i, row, col).second;
     }
     row = elizabeth.row();
     col = elizabeth.col();
@@ -150,9 +150,6 @@ Square Board::queensMoves(int32_t moveNumber, int32_t row, int32_t col) {
  //If the number is not 1 - 8 this returns a 0, 0 location.
  return(Square(0, 0));
 }
-
-
-
 
 
 bool Board::keepTrying(std::vector<Queen> queens) {
