@@ -53,6 +53,11 @@ class Board {
    */
   int32_t queenToMove(std::vector<Queen>);
 
+  /**
+   * This gives you the number of other queens that can
+   * attack any given location.
+   */
+  int32_t underAttackBy(Square);
 
 
  private:
@@ -71,17 +76,20 @@ class Board {
    */
   void markBoard(Queen);
 
-  /**
-   * This gives you the number of other queens that can
-   * attack any given location.
-   */
-  int32_t underAttackBy(Square);
 
   /**
    * Returns true if a position is on a the board and
    * false if it is off the board.
    */
   bool isOnBoard(int32_t, uint32_t);
+
+  /**
+   * Takes a row and coloum and "moves" depending on the move
+   * number you give it.
+   * 1 is |row--| and 8 is |row++, col++|.
+   */
+  Square queensMoves(int32_t, int32_t, int32_t);
+
 
   static const int32_t boardSize = 8;
   char chessBoard[boardSize][boardSize];
