@@ -54,7 +54,7 @@ class Board {
    */
   bool isOnBoard(const uint32_t, const uint32_t);
 
-  static const int32_t boardSize = 8;
+  static const int32_t boardSize = 4;
   bool chessBoard[boardSize][boardSize];
   char displayChessBoard[boardSize][boardSize];
 

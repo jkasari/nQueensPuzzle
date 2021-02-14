@@ -3,7 +3,10 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& stream, const Board& displayChessBoard) {
-  stream << "+---+---+---+---+---+---+---+---+" << std::endl;
+  for(int i = 0; i < Board::boardSize; ++i) {
+    stream << "+---";
+  }
+  stream << "+" << std::endl;
   for (int i = 0; i < Board::boardSize; i++) {
     stream << "| ";
     for (int j = 0; j < Board::boardSize; j++) {
@@ -11,10 +14,18 @@ std::ostream& operator<<(std::ostream& stream, const Board& displayChessBoard) {
       stream << static_cast<char>(displayChessBoard.displayChessBoard[i][j]) << " | ";
     }
     if (i < Board::boardSize - 1) {
-      stream << std::endl << "|---|---|---|---|---|---|---|---|" << std::endl;
+      stream << std::endl;
+      for(int i = 0; i < Board::boardSize; ++i) {
+        stream << "|---";
+      }
+      stream << "|" << std::endl;
     }
   }
-  stream << std::endl << "+---+---+---+---+---+---+---+---+" << std::endl;
+  stream << std::endl;
+  for(int i = 0; i < Board::boardSize; ++i) {
+    stream << "+---";
+  }
+  stream << "+" << std::endl;
   return stream;
 }
 
@@ -29,7 +40,7 @@ Board::Board() {
 
 
 bool Board::placeQueens(const uint32_t col) {
-  if(col == 8) {
+  if(col == boardSize) {
     return true;
   } else if(!isRoomFor(col)) {
     return false;
