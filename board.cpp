@@ -53,3 +53,26 @@ void placeQueen(uint32_t row) {
     col += 1;
   }
 }
+
+Square moveQueen(uint32_t moveNumber, Square location) {
+  uint32_t row = location.first;
+  uint32_t col = location.second;
+ switch(moveNumber) {
+  case 0:
+   return(Square(row + 1, co));
+  case 1:
+   return(Square(row, col + 1));
+  case 2:
+   return(Square(row, co));
+  case 3:
+   return(Square(row, co));
+  case 4:
+   return(Square(row, co));
+  case 5:
+   return(Square(row, co));
+  case 6:
+   return(Square(row, co));
+  case 7:
+   return(Square(row, co));
+ }
+}

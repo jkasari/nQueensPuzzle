@@ -27,13 +27,18 @@ class Board {
 
  private:
   /**
+   * Takes a move number and increments the queen 1 place in that
+   * direction.
+   */
+  void moveQueen(uint32_t);
+  /**
    * Takes a location and marks all the potenial moves for that queen.
    * This leaves marks in |chessBoard|.
    */
   void decreaseMoves(uint32_t, uint32_t);
 
   /**
-   * Returns true if the move is on the board. 
+   * Returns true if the move is on the board.
    */
   bool isOnBoard(uint32_t);
 
