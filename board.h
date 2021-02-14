@@ -1,4 +1,3 @@
-#include "queen.h"
 #include <vector>
 #include <utility>
 #ifndef board_h
@@ -13,86 +12,34 @@ class Board {
 
  public:
   Board();
+  /**
+   * This takes the |displayChessBoard| paird with |chessBoard| and
+   * outputs a nice picture into the terminal.
+   */
+  void displayBoard(void);
 
   /**
-   * This is just for tests!!!!! Tells you what char is currently
-   * at a given location on a board.
+   * Takes a queen number and finds a place for queen on the |chessBoard|.
+   * Also marks the board with all the queens potential moves.
    */
-  char testBoard(int32_t, uint32_t);
-
-  /**
-   * This is just for terminal visual tests!!
-   */
-  void markBoard(Square);
-
-  /**
-   * This goes over all the queens in play and populates the
-   * board with them. Using '@' to mark their loactions.
-   */
-  void update(std::vector<Queen>);
-
-  /**
-   * Finds the best possible move for any given queen
-   */
-  Square findBestMove(Queen);
-
-  /**
-   * Looks to see if all the queens to not have any attackers.
-   */
-  bool keepTrying(std::vector<Queen>);
-
-  /**
-   * Takes a queen and tells you all the okay places
-   * to move it on a live board accounting for other
-   * queens.
-   */
-  std::vector<Square> potentialMoves(Queen);
-
-  /**
-   * This tells you what queen you want to move.
-   */
-  int32_t queenToMove(std::vector<Queen>);
-
-  /**
-   * This gives you the number of other queens that can
-   * attack any given location.
-   */
-  int32_t underAttackBy(Square);
+  void placeQueen(uint32_t);
 
 
  private:
   /**
-   * Finds the index of the smallest value in an vector.
+   * Takes a location and marks all the potenial moves for that queen.
+   * This leaves marks in |chessBoard|.
    */
-  int32_t findSmallestIndex(std::vector<int32_t>);
+  void decreaseMoves(uint32_t, uint32_t);
 
   /**
-   * This cleans the board of any markings left over.
+   * Returns true if the move is on the board. 
    */
-  void cleanBoard(void);
-
-  /**
-   * This leaves an '@' char where a queen currently is.
-   */
-  void markBoard(Queen);
-
-
-  /**
-   * Returns true if a position is on a the board and
-   * false if it is off the board.
-   */
-  bool isOnBoard(int32_t, uint32_t);
-
-  /**
-   * Takes a row and coloum and "moves" depending on the move
-   * number you give it.
-   * 1 is |row--| and 8 is |row++, col++|.
-   */
-  Square queensMoves(int32_t, int32_t, int32_t);
-
+  bool isOnBoard(uint32_t);
 
   static const int32_t boardSize = 8;
-  char chessBoard[boardSize][boardSize];
+  bool chessBoard[boardSize][boardSize];
+  char displayChessBoard[boardSize][boardSize];
 
 };
 
