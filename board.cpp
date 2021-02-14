@@ -22,25 +22,42 @@ Board::Board() {
   for (int i = 0; i < boardSize; i++) {
     for (int j = 0; j < boardSize; j++) {
       displayChessBoard[i][j] = ' ';
-      chessBoard[1][j] = true;
+      chessBoard[i][j] = true;
     }
   }
 }
 
 
-void Board::placeQueen(uint32_t row) {
-  uint32_t col = 0;
-  for(int col = 0; col < boardSize; col++) {
+bool Board::placeQueens(const uint32_t col) {
+  if(col == 8) {
+    return true;
+  } else if(!isRoomFor(col)) {
+    return false;
+  }
+  uint32_t row = 0;
+  for(int row = 0; row < boardSize; row++) {
     if(chessBoard[row][col]) {
       decreaseMoves(Square(row, col));
-      chessBoard[row][col] = false;
-      displayChessBoard[row][col] = '@';
-      return;
+    }
+    if(placeQueens(col + 1)) {
+      return true;
+    } else {
+      increaseMoves(Square(row, col));
     }
   }
+  return false;
 }
 
-Square Board::moveQueen(uint32_t moveNumber, uint32_t row, uint32_t col) {
+bool Board::isRoomFor(const uint32_t col) {
+  for(int row = 0; row < boardSize; row++) {
+    if(chessBoard[row][col]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+Square Board::moveQueen(const uint32_t moveNumber, uint32_t row, uint32_t col) {
  switch(moveNumber) {
   case 0:
    return(Square(row + 1, col));
@@ -62,13 +79,15 @@ Square Board::moveQueen(uint32_t moveNumber, uint32_t row, uint32_t col) {
  return Square(0, 0);
 }
 
-void Board::decreaseMoves(Square location) {
+void Board::decreaseMoves(const Square location) {
   uint32_t row = location.first;
   uint32_t col = location.second;
+  chessBoard[row][col] = false;
+  displayChessBoard[row][col] = '@';
 
   for(int i = 0; i < 8; i++) {
   row = moveQueen(i, row, col).first;
-  col = moveQueen(i, row, col).first;
+  col = moveQueen(i, row, col).second;
     while(isOnBoard(row, col)) {
       if(chessBoard[row][col]) {
         chessBoard[row][col] = false;
@@ -82,6 +101,28 @@ void Board::decreaseMoves(Square location) {
   }
 }
 
-bool Board::isOnBoard(uint32_t row, uint32_t col) {
+void Board::increaseMoves(const Square location) {
+  uint32_t row = location.first;
+  uint32_t col = location.second;
+  chessBoard[row][col] = true;
+  displayChessBoard[row][col] = ' ';
+
+  for(int i = 0; i < 8; i++) {
+  row = moveQueen(i, row, col).first;
+  col = moveQueen(i, row, col).second;
+    while(isOnBoard(row, col)) {
+      if(!chessBoard[row][col]) {
+        chessBoard[row][col] = true;
+        displayChessBoard[row][col] = ' ';
+      }
+      row = moveQueen(i, row, col).first;
+      col = moveQueen(i, row, col).second;
+    }
+    row = location.first;
+    col = location.second;
+  }
+}
+
+bool Board::isOnBoard(const uint32_t row, const uint32_t col) {
   return (row >= 0 && boardSize > row && col >= 0 && boardSize > col);
 }

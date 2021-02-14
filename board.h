@@ -17,25 +17,36 @@ class Board {
    * Takes a queen number and finds a place for queen on the |chessBoard|.
    * Also marks the board with all the queens potential moves.
    */
-  void placeQueen(uint32_t);
+  bool placeQueens(const uint32_t);
 
 
  private:
   /**
+   * Tells you if a colom has room for a queen.
+   */
+  bool isRoomFor(const uint32_t);
+
+  /**
    * Takes a move number and increments the queen 1 place in that
    * direction.
    */
-  Square moveQueen(uint32_t, uint32_t, uint32_t);
+  Square moveQueen(const uint32_t, uint32_t, uint32_t);
+
   /**
    * Takes a location and marks all the potenial moves for that queen.
    * This leaves marks in |chessBoard|.
    */
-  void decreaseMoves(Square);
+  void decreaseMoves(const Square);
+
+  /**
+   * Does literally the oppisite of |decreaseMoves|.
+   */
+  void increaseMoves(const Square);
 
   /**
    * Returns true if the move is on the board.
    */
-  bool isOnBoard(uint32_t, uint32_t);
+  bool isOnBoard(const uint32_t, const uint32_t);
 
   static const int32_t boardSize = 8;
   bool chessBoard[boardSize][boardSize];
