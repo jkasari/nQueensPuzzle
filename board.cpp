@@ -33,6 +33,7 @@ void Board::placeQueen(uint32_t row) {
   for(int col = 0; col < boardSize; col++) {
     if(chessBoard[row][col]) {
       decreaseMoves(Square(row, col));
+      chessBoard[row][col] = false;
       displayChessBoard[row][col] = '@';
       return;
     }
@@ -66,8 +67,13 @@ void Board::decreaseMoves(Square location) {
   uint32_t col = location.second;
 
   for(int i = 0; i < 8; i++) {
+  row = moveQueen(i, row, col).first;
+  col = moveQueen(i, row, col).first;
     while(isOnBoard(row, col)) {
-      chessBoard[row][col] = false;
+      if(chessBoard[row][col]) {
+        chessBoard[row][col] = false;
+        displayChessBoard[row][col] = '*';
+      }
       row = moveQueen(i, row, col).first;
       col = moveQueen(i, row, col).second;
     }
