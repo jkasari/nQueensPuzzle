@@ -3,33 +3,35 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& stream, const Board& displayChessBoard) {
-  for(int i = 0; i < Board::boardSize; ++i) {
+  for(int i = 0; i < displayChessBoard.boardSize; ++i) {
     stream << "+---";
   }
   stream << "+" << std::endl;
-  for (int i = 0; i < Board::boardSize; i++) {
+  for (int i = 0; i < displayChessBoard.boardSize; i++) {
     stream << "| ";
-    for (int j = 0; j < Board::boardSize; j++) {
+    for (int j = 0; j < displayChessBoard.boardSize; j++) {
       //    stream << std::setfill('0') << std::setw(2);
       stream << static_cast<char>(displayChessBoard.displayChessBoard[i][j]) << " | ";
     }
-    if (i < Board::boardSize - 1) {
+    if (i < displayChessBoard.boardSize - 1) {
       stream << std::endl;
-      for(int i = 0; i < Board::boardSize; ++i) {
+      for(int i = 0; i < displayChessBoard.boardSize; ++i) {
         stream << "|---";
       }
       stream << "|" << std::endl;
     }
   }
   stream << std::endl;
-  for(int i = 0; i < Board::boardSize; ++i) {
+  for(int i = 0; i < displayChessBoard.boardSize; ++i) {
     stream << "+---";
   }
   stream << "+" << std::endl;
   return stream;
 }
 
-Board::Board() {
+Board::Board(uint32_t sizeOfBoard) {
+  boardSize = sizeOfBoard;
+  allocate(boardSize);
   for (int i = 0; i < boardSize; i++) {
     for (int j = 0; j < boardSize; j++) {
       displayChessBoard[i][j] = ' ';
@@ -38,6 +40,33 @@ Board::Board() {
   }
 }
 
+void Board::allocate(uint32_t sizeOfBoard) {
+  chessBoard = new bool*[sizeOfBoard];
+  for(int i = 0; i < sizeOfBoard; ++i) {
+    chessBoard[i] = new bool[sizeOfBoard];
+  }
+  displayChessBoard = new char*[sizeOfBoard];
+  for(int i = 0; i < sizeOfBoard; ++i) {
+    displayChessBoard[i] = new char[sizeOfBoard];
+  }
+}
+
+Board::~Board() {
+  if(chessBoard) {
+    for(int i = 0; i < boardSize; ++i) {
+      delete[] chessBoard[i];
+      chessBoard[i] = nullptr;
+    }
+    for(int i = 0; i < boardSize; ++i) {
+      delete[] displayChessBoard[i];
+      displayChessBoard[i] = nullptr;
+    }
+    delete[] chessBoard;
+    delete[] displayChessBoard;
+    chessBoard = nullptr;
+    displayChessBoard = nullptr;
+  }
+}
 
 bool Board::placeQueens(const uint32_t col) {
   if(col == boardSize) {
