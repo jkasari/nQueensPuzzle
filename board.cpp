@@ -37,12 +37,13 @@ bool Board::placeQueens(const uint32_t col) {
   uint32_t row = 0;
   for(int row = 0; row < boardSize; row++) {
     if(chessBoard[row][col]) {
-      decreaseMoves(Square(row, col));
-    }
-    if(placeQueens(col + 1)) {
-      return true;
-    } else {
-      increaseMoves(Square(row, col));
+      std::vector<Square> moves = potentialMoves(Square(row, col));
+      decreaseMoves(moves);
+      if(placeQueens(col + 1)) {
+        return true;
+      }   else {
+        increaseMoves(moves);
+      }
     }
   }
   return false;
@@ -79,19 +80,17 @@ Square Board::moveQueen(const uint32_t moveNumber, uint32_t row, uint32_t col) {
  return Square(0, 0);
 }
 
-void Board::decreaseMoves(const Square location) {
+const std::vector<Square> Board::potentialMoves(Square location) {
   uint32_t row = location.first;
   uint32_t col = location.second;
-  chessBoard[row][col] = false;
-  displayChessBoard[row][col] = '@';
-
+  std::vector<Square> newLocations;
+  newLocations.push_back(Square(row, col));
   for(int i = 0; i < 8; i++) {
   row = moveQueen(i, row, col).first;
   col = moveQueen(i, row, col).second;
     while(isOnBoard(row, col)) {
       if(chessBoard[row][col]) {
-        chessBoard[row][col] = false;
-        displayChessBoard[row][col] = '*';
+        newLocations.push_back(Square(row, col));
       }
       row = moveQueen(i, row, col).first;
       col = moveQueen(i, row, col).second;
@@ -99,27 +98,30 @@ void Board::decreaseMoves(const Square location) {
     row = location.first;
     col = location.second;
   }
+  return newLocations;
 }
 
-void Board::increaseMoves(const Square location) {
-  uint32_t row = location.first;
-  uint32_t col = location.second;
-  chessBoard[row][col] = true;
-  displayChessBoard[row][col] = ' ';
 
-  for(int i = 0; i < 8; i++) {
-  row = moveQueen(i, row, col).first;
-  col = moveQueen(i, row, col).second;
-    while(isOnBoard(row, col)) {
-      if(!chessBoard[row][col]) {
-        chessBoard[row][col] = true;
-        displayChessBoard[row][col] = ' ';
-      }
-      row = moveQueen(i, row, col).first;
-      col = moveQueen(i, row, col).second;
-    }
-    row = location.first;
-    col = location.second;
+void Board::decreaseMoves(const std::vector<Square> locations) {
+  uint32_t row = locations[0].first;
+  uint32_t col = locations[0].second;
+  chessBoard[row][col] = false;
+  displayChessBoard[row][col] = '@';
+  for(int i = 1; i < locations.size(); ++i) {
+    row = locations[i].first;
+    col = locations[i].second;
+    chessBoard[row][col] = false;
+  //  If you want to display the potential paths the queens can take un comment this.
+  //  displayChessBoard[row][col] = '-';
+  }
+}
+
+void Board::increaseMoves(const std::vector<Square> locations) {
+  for(int i = 0; i < locations.size(); ++i) {
+    uint32_t row = locations[i].first;
+    uint32_t col = locations[i].second;
+    chessBoard[row][col] = true;
+    displayChessBoard[row][col] = ' ';
   }
 }
 

@@ -33,15 +33,21 @@ class Board {
   Square moveQueen(const uint32_t, uint32_t, uint32_t);
 
   /**
+   * Tells you all the potential moves for that queen.
+   */
+
+  const std::vector<Square> potentialMoves(Square);
+
+  /**
    * Takes a location and marks all the potenial moves for that queen.
    * This leaves marks in |chessBoard|.
    */
-  void decreaseMoves(const Square);
+  void decreaseMoves(const std::vector<Square>);
 
   /**
    * Does literally the oppisite of |decreaseMoves|.
    */
-  void increaseMoves(const Square);
+  void increaseMoves(const std::vector<Square>);
 
   /**
    * Returns true if the move is on the board.
