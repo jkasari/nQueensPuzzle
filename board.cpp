@@ -42,3 +42,14 @@ void Board::displayBoard(void) {
   }
   std::cout << displayChessBoard << std::endl;
 }
+
+void placeQueen(uint32_t row) {
+  uint32_t col = 0;
+  while(isOnBoard[row][col]) {
+    if(chessBoard[row][col]) {
+      decreaseMoves(row, col);
+      return;
+    }
+    col += 1;
+  }
+}
