@@ -59,20 +59,39 @@ Square moveQueen(uint32_t moveNumber, Square location) {
   uint32_t col = location.second;
  switch(moveNumber) {
   case 0:
-   return(Square(row + 1, co));
+   return(Square(row + 1, col));
   case 1:
    return(Square(row, col + 1));
   case 2:
-   return(Square(row, co));
+   return(Square(row - 1, col));
   case 3:
-   return(Square(row, co));
+   return(Square(row, col - 1));
   case 4:
-   return(Square(row, co));
+   return(Square(row + 1, col + 1));
   case 5:
-   return(Square(row, co));
+   return(Square(row + 1, col - 1));
   case 6:
-   return(Square(row, co));
+   return(Square(row - 1, col + 1));
   case 7:
-   return(Square(row, co));
+   return(Square(row - 1, col - 1));
  }
+}
+
+void decreaseMoves(Square location) {
+  uint32_t row = location.first;
+  uint32_t col = location.second;
+
+  for(int i = 0; i < 8; i++) {
+    while(isOnBoard(row, col)) {
+      chessBoard[row][col] = false;
+      row = moveQueen(i, location).first;
+      col = moveQueen(i, location).second;
+    }
+    row = location.first;
+    col = location.second;
+  }
+}
+
+bool Board::isOnBoard(uint32_t row, uint32_t col) {
+  return row >= 0 && boardSize > row && col >= 0 && boardSize > col;
 }
