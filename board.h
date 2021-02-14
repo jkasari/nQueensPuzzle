@@ -12,11 +12,6 @@ class Board {
 
  public:
   Board();
-  /**
-   * This takes the |displayChessBoard| paird with |chessBoard| and
-   * outputs a nice picture into the terminal.
-   */
-  void displayBoard(void);
 
   /**
    * Takes a queen number and finds a place for queen on the |chessBoard|.
@@ -30,7 +25,7 @@ class Board {
    * Takes a move number and increments the queen 1 place in that
    * direction.
    */
-  Square moveQueen(uint32_t, Square);
+  Square moveQueen(uint32_t, uint32_t, uint32_t);
   /**
    * Takes a location and marks all the potenial moves for that queen.
    * This leaves marks in |chessBoard|.

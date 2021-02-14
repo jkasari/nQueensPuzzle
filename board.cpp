@@ -27,36 +27,19 @@ Board::Board() {
   }
 }
 
-void Board::displayBoard(void) {
-  uint32_t row = 0;
-  uint32_t col = 0;
-  while(isOnBoard(row, col)) {
-    while(isOnBoard(row, col)) {
-      if(chessBoard[row][col]) {
-        displayChessBoard[row][col] = '@';
-      }
-      col += 1;
-    }
-    col = 0;
-    row += 1;
-  }
-  std::cout << displayChessBoard << std::endl;
-}
 
 void Board::placeQueen(uint32_t row) {
   uint32_t col = 0;
-  while(isOnBoard(row, col)) {
+  for(int col = 0; col < boardSize; col++) {
     if(chessBoard[row][col]) {
       decreaseMoves(Square(row, col));
+      displayChessBoard[row][col] = '@';
       return;
     }
-    col += 1;
   }
 }
 
-Square Board::moveQueen(uint32_t moveNumber, Square location) {
-  uint32_t row = location.first;
-  uint32_t col = location.second;
+Square Board::moveQueen(uint32_t moveNumber, uint32_t row, uint32_t col) {
  switch(moveNumber) {
   case 0:
    return(Square(row + 1, col));
@@ -85,8 +68,8 @@ void Board::decreaseMoves(Square location) {
   for(int i = 0; i < 8; i++) {
     while(isOnBoard(row, col)) {
       chessBoard[row][col] = false;
-      row = moveQueen(i, location).first;
-      col = moveQueen(i, location).second;
+      row = moveQueen(i, row, col).first;
+      col = moveQueen(i, row, col).second;
     }
     row = location.first;
     col = location.second;
