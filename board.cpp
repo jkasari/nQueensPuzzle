@@ -19,8 +19,8 @@ std::ostream& operator<<(std::ostream& stream, const Board& displayChessBoard) {
 }
 
 Board::Board() {
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 8; j++) {
+  for (int i = 0; i < boardSize; i++) {
+    for (int j = 0; j < boardSize; j++) {
       displayChessBoard[i][j] = ' ';
       chessBoard[1][j] = true;
     }
@@ -31,7 +31,7 @@ void Board::displayBoard(void) {
   uint32_t row = 0;
   uint32_t col = 0;
   while(isOnBoard(row, col)) {
-    while(isOnboard(row, col)) {
+    while(isOnBoard(row, col)) {
       if(chessBoard[row][col]) {
         displayChessBoard[row][col] = '@';
       }
@@ -43,18 +43,18 @@ void Board::displayBoard(void) {
   std::cout << displayChessBoard << std::endl;
 }
 
-void placeQueen(uint32_t row) {
+void Board::placeQueen(uint32_t row) {
   uint32_t col = 0;
-  while(isOnBoard[row][col]) {
+  while(isOnBoard(row, col)) {
     if(chessBoard[row][col]) {
-      decreaseMoves(row, col);
+      decreaseMoves(Square(row, col));
       return;
     }
     col += 1;
   }
 }
 
-Square moveQueen(uint32_t moveNumber, Square location) {
+Square Board::moveQueen(uint32_t moveNumber, Square location) {
   uint32_t row = location.first;
   uint32_t col = location.second;
  switch(moveNumber) {
@@ -75,9 +75,10 @@ Square moveQueen(uint32_t moveNumber, Square location) {
   case 7:
    return(Square(row - 1, col - 1));
  }
+ return Square(0, 0);
 }
 
-void decreaseMoves(Square location) {
+void Board::decreaseMoves(Square location) {
   uint32_t row = location.first;
   uint32_t col = location.second;
 
@@ -93,5 +94,5 @@ void decreaseMoves(Square location) {
 }
 
 bool Board::isOnBoard(uint32_t row, uint32_t col) {
-  return row >= 0 && boardSize > row && col >= 0 && boardSize > col;
+  return (row >= 0 && boardSize > row && col >= 0 && boardSize > col);
 }
