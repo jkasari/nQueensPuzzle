@@ -11,7 +11,8 @@ class Board {
   friend std::ostream& operator<<(std::ostream&, const Board&);
 
  public:
-  Board();
+  Board(uint32_t);
+  ~Board();
 
   /**
    * Takes a queen number and finds a place for queen on the |chessBoard|.
@@ -21,6 +22,12 @@ class Board {
 
 
  private:
+
+  /**
+   * Finds a spot on the heap for |Board| data members.
+   */
+  void allocate(uint32_t);
+
   /**
    * Tells you if a colom has room for a queen.
    */
@@ -54,9 +61,8 @@ class Board {
    */
   bool isOnBoard(const uint32_t, const uint32_t);
 
-  static const int32_t boardSize = 8;
-  bool chessBoard[boardSize][boardSize];
-  char displayChessBoard[boardSize][boardSize];
+  const int32_t boardSize;
+  bool** chessBoard;
 
 };
 
