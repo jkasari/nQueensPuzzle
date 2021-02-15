@@ -18,16 +18,22 @@ int main(int argc, char** argv) {
     cout << "Sorry partner, anything less then a 4 X 4 just don't work";
     cout << endl << endl;
     return 0;
-  } else if( sizeOfBoard > 42) {
+  } else if(sizeOfBoard > 30) {
     cout << endl;
-    cout << "Calm youself!! This isn't a super computer! You try solving with a board bigger then 42!";
+    cout << "Calm youself!! This isn't a super computer! You try solving with a board bigger then 30!";
     cout << endl << endl;
     return 0;
+  } else if(sizeOfBoard > 24) {
+    cout << endl;
+    cout << "Hold up, this might take a sec.";
+    cout << endl;
+    cout << "I'm thinking... I'm thinking...";
+    cout << endl;
   }
   Board chessBoard(sizeOfBoard);
   chessBoard.placeQueens(0);
   cout << endl << chessBoard << endl;
-  cout << "If apsolute power corrupts apsolutely, does absolute powerlessness make you pure?";
+  cout << "If absolute power corrupts apsolutely, does absolute powerlessness make you pure?";
   cout << endl << endl;
   return 0;
 }
