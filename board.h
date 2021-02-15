@@ -61,9 +61,8 @@ class Board {
    */
   bool isOnBoard(const uint32_t, const uint32_t);
 
-  int32_t boardSize;
+  const int32_t boardSize;
   bool** chessBoard;
-  char** displayChessBoard;
 
 };
 
